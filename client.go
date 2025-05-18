@@ -19,6 +19,7 @@ const (
 )
 
 var retryStatusCodes = map[int]bool{
+	400: true,
 	429: true,
 	500: true,
 	502: true,
@@ -101,7 +102,10 @@ func (c *MistralClient) request(method string, jsonData map[string]interface{}, 
 			}
 			continue
 		}
-		if _, ok := retryStatusCodes[resp.StatusCode]; ok {
+		_, ok := retryStatusCodes[resp.StatusCode]
+		fmt.Printf("Find status code %d in retryStatusCodes: %v\n", resp.StatusCode, ok)
+		if ok {
+			fmt.Printf("[%d/%d] Retry request\n", i+1, c.maxRetries)
 			time.Sleep(time.Duration(i+1) * 500 * time.Millisecond)
 			continue
 		}

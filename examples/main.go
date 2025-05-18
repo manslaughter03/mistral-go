@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/gage-technologies/mistral-go"
+	"github.com/manslaughter03/mistral-go"
 )
 
 func main() {
